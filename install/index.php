@@ -1,4 +1,5 @@
 <?php
+
 if(!file_exists('.htaccess')) {
     $data = "Options -MultiViews
 RewriteEngine On

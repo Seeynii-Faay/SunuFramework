@@ -73,8 +73,8 @@ class Database
                     throw new \PDOException('La valeur de DB'.$db_active.'HOST dans config/db.config.ini doit etre au format IP', 500);
                 if(isset(self::$dbConfig['DB'.$db_active.'PORT'])) $dsn .= ';port='.self::$dbConfig['DB'.$db_active.'PORT'];
                 elseif (socketConnexion === true) throw new \PDOException('Vous devez definir DB'.$db_active.'PORT = [PORT] dans config/db.config.ini', 500);
-            
-            
+
+
                 if (isset($dsn)) {
                     $this->connexion = (self::$dbConfig['DB'.$db_active.'TYPE'] == 'sqlite')
                         ? new \PDO($dsn)
@@ -182,26 +182,20 @@ class Database
     }
 
     /**
-     * @param string $db_prefix
      * @param int $db_active
      * @return bool|int
      * @throws \Exception
      */
-    public static function generateTable($db_prefix = '', $db_active = 1)
+    public static function generateTable($db_active = 1)
     {
         self::$dbConfig = self::getDbConfig();
         $connexion = self::getConnexion($db_active);
         $result = false;
         $db_active = intval($db_active) == 1 ? '' : $db_active;
-        if(file_exists(ROOT.'config/DB.'.self::$dbConfig['DB'.$db_active.'TYPE'].'.sql')) {
-            $sql = file_get_contents(ROOT.'config/DB.'.self::$dbConfig['DB'.$db_active.'TYPE'].'.sql');
-            if(strlen($db_prefix) > 0) {
-                if($db_prefix != '' && !Utils::endsWith($db_prefix, '_')) $db_prefix .= "_";
-                $sql = str_replace("sf_", $db_prefix."sf_", $sql);
-            }
+        if(file_exists(ROOT.'config/DB.'.self::$dbConfig['DB'.$db_active.'_TYPE'].'.sql')) {
+            $sql = file_get_contents(ROOT.'config/DB.'.self::$dbConfig['DB'.$db_active.'_TYPE'].'.sql');
             try{
                 $result = $connexion->exec($sql);
-//                rename(ROOT.'config/DB.'.self::$dbConfig['DB'.$db_active.'TYPE'].'.sql', ROOT.'config/DB.used.'.self::$dbConfig['DB'.$db_active.'TYPE'].'.sql');
             }catch(\PDOException $ex){
                 throw $ex;
             }

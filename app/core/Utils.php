@@ -25,6 +25,7 @@ class Utils
             if (count($param) > 0) $url .= "/" . implode('/', self::setBase64_encode_array($param));
         }
         header('Location:' . $url);
+        exit();
     }
 
     /**

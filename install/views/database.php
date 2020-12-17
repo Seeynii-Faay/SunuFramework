@@ -20,7 +20,7 @@ if(count($_POST) > 0) {
     }
     if($generate || $_POST['DB_TYPE'] === 'sqlite') {
         try {
-            \app\core\Database::generateTable($_POST['DB_PREFIX']);
+            \app\core\Database::generateTable();
         } catch (\PDOException $e) {
             header('Location: '.WEBROOT.'error/'.base64_encode($e->getMessage()));
             exit(500);

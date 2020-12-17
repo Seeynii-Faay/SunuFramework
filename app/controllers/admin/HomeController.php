@@ -44,11 +44,9 @@ class HomeController extends BaseController
         $result = $this->models->getUser($param);
 
         if (count($result) === 1) {
-//            if(password_verify($this->paramPOST['password'], $result[0]->password)){
-            if(1){
+            if(password_verify($this->paramPOST['password'], $result[0]->password)) {
                 Session::set_User_Connecter($result);
-                Utils::redirect("utilisateur","liste");
-                exit();
+                Utils::redirect("utilisateur","list");
             }else {
                 Utils::setMessageAlert(["error","Mot de passe incorrect !"]);
                 Utils::redirect();
