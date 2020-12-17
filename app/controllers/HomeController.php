@@ -21,7 +21,6 @@ class HomeController extends BaseController
 
     public function index()
     {
-        Utils::removeAppConfigConstant("LINK");
         $this->views->initTemplate(["header"=>"header-home", "sidebar"=>"not-used", "footer"=>"footer-home"]);
         $this->views->getTemplate();
     }
